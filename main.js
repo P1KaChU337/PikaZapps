@@ -86,7 +86,7 @@ if (typeof window === 'undefined') {
   burger.addEventListener('click', () => setMenu(burger.getAttribute('aria-expanded') !== 'true'));
   nav.addEventListener('click', (e) => { if (e.target.closest('a')) setMenu(false); });
   document.addEventListener('keydown', (e) => { if (e.key === 'Escape') setMenu(false); });
-  window.matchMedia('(min-width: 821px)').addEventListener('change', () => setMenu(false));
+  window.matchMedia('(min-width: 861px)').addEventListener('change', () => setMenu(false));
 
   /* ---------- Подсветка активного пункта меню ---------- */
   const navLinks = $$('.nav__link');
@@ -119,8 +119,6 @@ if (typeof window === 'undefined') {
     });
   }, { rootMargin: '0px 0px -8% 0px', threshold: 0.08 });
   $$('.reveal').forEach((el) => revealObserver.observe(el));
-  // карточки внутри <li> — stagger считаем по <li>
-  $$('.contacts > li > .reveal').forEach((el, i) => { el.style.transitionDelay = `${i * 60}ms`; });
 
   /* ---------- Фильтр проектов ---------- */
   const filterBtns = $$('.filter__btn');
@@ -263,173 +261,52 @@ if (typeof window === 'undefined') {
   })();
 
   /* =================================================================
-     Typewriter — псевдо-IDE в hero
+     Hero: печатающиеся сменяющиеся «роли» под ником
      ================================================================= */
-  const IDE_CODE = `// NW Team Bot: Discord ↔ Telegram
-import { Client, GatewayIntentBits } from 'discord.js';
-import { Telegraf } from 'telegraf';
-
-const discord = new Client({
-  intents: [GatewayIntentBits.Guilds, GatewayIntentBits.GuildMembers],
-});
-const tg = new Telegraf(process.env.TG_TOKEN);
-
-discord.on('guildMemberAdd', async (member) => {
-  await member.roles.add(config.clanRole);
-  await member.send(\`Привет, \${member.user.username}! Добро пожаловать в ༺NW༻\`);
-  log('join', member.id);
-});
-
-discord.on('messageCreate', async (msg) => {
-  if (msg.author.bot) return;
-  await tg.telegram.sendMessage(CHAT_ID, \`[DC] \${msg.author.username}: \${msg.content}\`);
-});
-
-discord.login(process.env.DISCORD_TOKEN);
-tg.launch(); // 🚀 bridge online`;
-
-  /** Мини-токенайзер JS → [[class, text], ...] */
-  function tokenize(src) {
-    const re = /(\/\/[^\n]*)|(`(?:\\.|[^`])*`|'(?:\\.|[^'\n])*'|"(?:\\.|[^"\n])*")|\b(import|from|const|let|new|async|await|if|return|for|of)\b|\b(\d+)\b|([A-Za-z_$][\w$]*)|([{}()[\];,.:=<>+\-*/!?])/g;
-    const out = [];
-    let lastIdx = 0, m, prevDot = false;
-    while ((m = re.exec(src))) {
-      if (m.index > lastIdx) out.push(['', src.slice(lastIdx, m.index)]);
-      let cls = '';
-      if (m[1]) cls = 't-com';
-      else if (m[2]) cls = 't-str';
-      else if (m[3]) cls = 't-kw';
-      else if (m[4]) cls = 't-num';
-      else if (m[5]) {
-        const next = src.slice(re.lastIndex).match(/^\s*\(/);
-        cls = next ? 't-fn' : prevDot ? 't-prop' : '';
-      } else if (m[6]) cls = 't-pun';
-      out.push([cls, m[0]]);
-      prevDot = m[0] === '.';
-      lastIdx = re.lastIndex;
-    }
-    if (lastIdx < src.length) out.push(['', src.slice(lastIdx)]);
-    return out;
-  }
-
-  /** Печатает массив токенов в контейнер. Возвращает функцию отмены. */
-  function typeTokens(target, tokens, { speed = 26, onLine, onDone } = {}) {
-    let ti = 0, ci = 0, span = null, timer = 0, cancelled = false;
-    const tick = () => {
-      if (cancelled) return;
-      if (document.hidden) { timer = setTimeout(tick, 400); return; }
-      if (ti >= tokens.length) { if (onDone) onDone(); return; }
-      const [cls, text] = tokens[ti];
-      if (!span) {
-        span = document.createElement('span');
-        if (cls) span.className = cls;
-        target.appendChild(span);
-      }
-      const ch = text[ci++];
-      span.textContent += ch;
-      if (ch === '\n' && onLine) onLine();
-      if (ci >= text.length) { ti++; ci = 0; span = null; }
-      const delay = ch === '\n' ? speed * 6 : ch === ' ' ? speed * 0.5 : speed * (0.5 + Math.random());
-      timer = setTimeout(tick, delay);
-    };
-    tick();
-    return () => { cancelled = true; clearTimeout(timer); };
-  }
-
   (() => {
-    const code = $('#ide-code');
-    const gutter = $('#ide-gutter');
-    const body = $('.ide__body');
-    const tokens = tokenize(IDE_CODE);
-    let lines = 1;
-    const setGutter = () => {
-      gutter.textContent = Array.from({ length: lines }, (_, i) => i + 1).join('\n');
-      body.scrollTop = body.scrollHeight;
-    };
+    const el = $('#role');
+    if (!el) return;
+    const ROLES = [
+      'пишу ботов для Discord и Telegram',
+      'автоматизирую рутину',
+      'хостю сайты на старом телефоне',
+      'скриптую OpenComputers на Lua',
+      'склеиваю API в одну систему',
+    ];
+    if (reducedMotion()) return; // остаётся первая фраза из HTML
 
-    const renderAll = () => {
-      code.textContent = '';
-      tokens.forEach(([cls, text]) => {
-        const s = document.createElement('span');
-        if (cls) s.className = cls;
-        s.textContent = text;
-        code.appendChild(s);
-      });
-      lines = IDE_CODE.split('\n').length;
-      setGutter();
+    let i = 0, pos = ROLES[0].length, deleting = true, timer = 0;
+    const tick = () => {
+      if (document.hidden) { timer = setTimeout(tick, 500); return; }
+      const word = ROLES[i];
+      if (deleting) {
+        pos--;
+        el.textContent = word.slice(0, pos);
+        if (pos === 0) { deleting = false; i = (i + 1) % ROLES.length; }
+        timer = setTimeout(tick, 28);
+      } else {
+        const next = ROLES[i];
+        pos++;
+        el.textContent = next.slice(0, pos);
+        if (pos === next.length) { deleting = true; timer = setTimeout(tick, 2600); return; }
+        timer = setTimeout(tick, 45 + Math.random() * 50);
+      }
     };
-
-    if (reducedMotion()) { renderAll(); return; }
-    lines = 1;
-    setGutter();
-    // небольшая пауза, чтобы глаз сначала увидел заголовок
-    setTimeout(() => typeTokens(code, tokens, { speed: 24, onLine: () => { lines++; setGutter(); } }), 600);
+    timer = setTimeout(tick, 3200);
+    motionQuery.addEventListener('change', () => {
+      if (!reducedMotion()) return;
+      clearTimeout(timer);
+      el.textContent = ROLES[0];
+    });
   })();
 
-  /* =================================================================
-     Терминал «лог запуска» — печатается, когда блок попадает в экран
-     ================================================================= */
+  /* ---------- Часы в шапке ---------- */
   (() => {
-    const term = $('#term');
-    if (!term) return;
-    const uptime = 337 + (new Date().getDate() % 30);
-    // [класс, текст]; строки с '$ ' печатаются посимвольно
-    const LINES = [
-      ['p', 'u0_a337@old-phone:~$ ', 'cmd', 'neofetch --off | head -3'],
-      ['dim', 'OS: Ubuntu 25 (proot) on Termux / Android'],
-      ['dim', `Host: старый смартфон · Uptime: ${uptime} days`],
-      ['p', 'u0_a337@old-phone:~$ ', 'cmd', 'cd ~/pikazapps && node main.js &'],
-      ['ok', '[pikazapps] serving ~/pikazapps → http://localhost:8080'],
-      ['p', 'u0_a337@old-phone:~$ ', 'cmd', 'clo publish http 8080'],
-      ['info', '[cloudpub] tunnel up → https://pikazapps.cloudpub.ru'],
-      ['warn', '[check] белый IP: не найден · хостинг: не нужен'],
-      ['ok', '[status] сайт онлайн ✦ батарея держится'],
-    ];
-
-    const add = (cls, text) => {
-      const s = document.createElement('span');
-      if (cls) s.className = cls;
-      s.textContent = text;
-      term.appendChild(s);
-      return s;
-    };
-
-    const renderAll = () => {
-      term.textContent = '';
-      LINES.forEach((l) => {
-        add(l[0], l[1]);
-        if (l[3]) add('', l[3]);
-        add('', '\n');
-      });
-      add('p', 'u0_a337@old-phone:~$ ');
-      add('caret', '');
-    };
-
-    const play = () => {
-      if (reducedMotion()) { renderAll(); return; }
-      term.textContent = '';
-      let i = 0;
-      const next = () => {
-        if (i >= LINES.length) {
-          add('p', 'u0_a337@old-phone:~$ ');
-          add('caret', '');
-          return;
-        }
-        const l = LINES[i++];
-        if (l[3]) {
-          add(l[0], l[1]);
-          typeTokens(term, [['', l[3]], ['', '\n']], { speed: 38, onDone: () => setTimeout(next, 350) });
-        } else {
-          add(l[0], l[1] + '\n');
-          setTimeout(next, 260);
-        }
-      };
-      next();
-    };
-
-    const obs = new IntersectionObserver((entries) => {
-      if (entries[0].isIntersecting) { obs.disconnect(); play(); }
-    }, { threshold: 0.35 });
-    obs.observe(term);
+    const clock = $('#clock');
+    if (!clock) return;
+    const fmt = new Intl.DateTimeFormat('ru-RU', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+    const update = () => { clock.textContent = fmt.format(new Date()); };
+    update();
+    setInterval(() => { if (!document.hidden) update(); }, 1000);
   })();
 }
