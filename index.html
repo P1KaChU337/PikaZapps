@@ -1,0 +1,466 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+
+  <!-- Verification -->
+  <meta name="yandex-verification" content="f57cfcf0f2771763" />
+  <meta name="google-site-verification" content="iHpvpGQ1bsPG3cDbY067yKLT4XKXPX8pfP2eyBOkyB8" />
+
+  <!-- SEO -->
+  <title>PikaZapps — P1KaChU337 / Senko__</title>
+  <meta name="description" content="PikaZapps — проекты P1KaChU337: Discord и Telegram боты, автоматизация, Minecraft/OpenComputers, веб-инструменты и self-hosting." />
+  <meta name="author" content="P1KaChU337 (Станислав, Senko__)" />
+  <meta name="keywords" content="P1KaChU337, Senko__, PikaZapps, проекты, Discord бот, Telegram бот, Minecraft, OpenComputers, Node.js, Lua, JavaScript, CloudPub, IT проекты, разработка, программирование, портфолио" />
+  <meta name="robots" content="index, follow" />
+  <meta name="language" content="ru" />
+  <meta name="theme-color" content="#8b5cf6" />
+  <meta name="color-scheme" content="dark" />
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="PikaZapps — проекты P1KaChU337 / Senko__" />
+  <meta property="og:description" content="Витрина проектов P1KaChU337: Discord/Telegram боты, утилиты, Minecraft разработки, веб-инструменты." />
+  <meta property="og:image" content="https://github.com/P1KaChU337/PikaZapps/raw/main/assets/favicon.png" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://pikazapps.cloudpub.ru/" />
+  <meta property="og:locale" content="ru_RU" />
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="PikaZapps — проекты P1KaChU337" />
+  <meta name="twitter:description" content="Инструменты, боты, Minecraft проекты, Node.js и Lua разработки." />
+  <meta name="twitter:image" content="https://github.com/P1KaChU337/PikaZapps/raw/main/assets/favicon.png" />
+
+  <!-- Favicon -->
+  <link rel="icon" href="assets/favicon.png" type="image/png" />
+  <link rel="apple-touch-icon" href="assets/favicon.png" />
+
+  <!-- Fonts: Unbounded (заголовки, есть кириллица), JetBrains Mono (код), Inter (текст) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;600;700&family=Unbounded:wght@500;700;800&display=swap" />
+
+  <link rel="stylesheet" href="style.css" />
+  <script>document.documentElement.classList.add('js');</script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Перейти к содержимому</a>
+
+  <!-- ===== Фоновые слои: matrix-дождь, пятна свечения, сетка, scanlines ===== -->
+  <div class="bg" aria-hidden="true">
+    <canvas id="matrix" class="bg__matrix"></canvas>
+    <div class="bg__glow bg__glow--1"></div>
+    <div class="bg__glow bg__glow--2"></div>
+    <div class="bg__glow bg__glow--3"></div>
+    <div class="bg__grid"></div>
+  </div>
+  <div class="overlay" aria-hidden="true"></div>
+
+  <!-- ===== HEADER ===== -->
+  <header class="header" id="top">
+    <div class="container header__inner">
+      <a class="header__logo" href="#top" aria-label="PikaZapps — на главную">
+        <img src="assets/pikazapps-long-logo.svg" alt="PikaZapps" width="180" height="36" />
+      </a>
+
+      <button class="burger" type="button" aria-label="Открыть меню" aria-expanded="false" aria-controls="nav">
+        <span></span><span></span><span></span>
+      </button>
+
+      <nav class="nav" id="nav" aria-label="Основная навигация">
+        <ul class="nav__list">
+          <li><a class="nav__link" href="#about">О себе</a></li>
+          <li><a class="nav__link" href="#skills">Стек</a></li>
+          <li><a class="nav__link" href="#projects">Проекты</a></li>
+          <li><a class="nav__link" href="#studio">Заказы</a></li>
+          <li><a class="nav__link" href="#contacts">Контакты</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <!-- ===== HERO ===== -->
+    <section class="hero" id="hero" aria-labelledby="hero-title">
+      <div class="container hero__inner">
+        <div class="hero__text">
+          <p class="hero__hello mono"><span class="accent">&gt;</span> Привет, меня зовут</p>
+          <h1 class="hero__title" id="hero-title">
+            <span class="glitch" data-text="Станислав">Станислав</span><span class="cursor" aria-hidden="true"></span>
+          </h1>
+          <p class="hero__aka mono">aka <b>P1KaChU337</b> <span class="muted">/</span> <b>Senko__</b></p>
+          <p class="hero__lead">
+            Пишу ботов для Discord и Telegram, автоматизирую рутину и поднимаю сервисы
+            на всём, что включается, даже на старом телефоне.
+          </p>
+          <div class="hero__cta">
+            <a class="btn btn--primary" href="#projects">Проекты</a>
+            <a class="btn btn--ghost" href="#contacts">Связаться</a>
+          </div>
+
+          <!-- В разработке сейчас -->
+          <div class="now card">
+            <p class="now__title mono"><span class="pulse" aria-hidden="true"></span> В разработке сейчас</p>
+            <ul class="now__list">
+              <li>
+                <a href="https://discord.gg/T7ty2DppcA" target="_blank" rel="noopener">NW Team Bot</a>
+                <span class="muted">Discord↔Telegram бот для сообщества ༺NW༻</span>
+              </li>
+              <li>
+                <a href="#project-las">Live Audio Stream</a>
+                <span class="muted">онлайн-радио на веб-стеке, держит большую нагрузку</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Псевдо-IDE: код печатается из main.js -->
+        <div class="ide" aria-hidden="true">
+          <div class="ide__bar">
+            <span class="ide__dots"><i></i><i></i><i></i></span>
+            <span class="ide__tab mono">nw-team-bot / index.js</span>
+          </div>
+          <div class="ide__body">
+            <div class="ide__gutter mono" id="ide-gutter"></div>
+            <pre class="ide__code mono"><code id="ide-code"></code><span class="caret"></span></pre>
+          </div>
+          <div class="ide__status mono">
+            <span>● node v22</span><span>UTF-8</span><span>JavaScript</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== О СЕБЕ ===== -->
+    <section class="section" id="about" aria-labelledby="about-title">
+      <div class="container">
+        <header class="section__head reveal">
+          <p class="section__kicker mono">// 01</p>
+          <h2 class="section__title" id="about-title">О себе</h2>
+        </header>
+
+        <div class="about">
+          <div class="about__text card reveal">
+            <p>
+              Я <b>Станислав</b>, в сети <b>P1KaChU337</b> или <b>Senko__</b>. Делаю
+              <span class="hl">ботов</span>, <span class="hl">утилиты</span> и
+              <span class="hl">автоматизацию</span>: всё, что убирает ручную рутину и
+              склеивает разные сервисы в одну систему.
+            </p>
+            <p>
+              Больше всего люблю Discord и Telegram: модерация, логирование, мосты между платформами.
+              Ещё пишу на Lua для OpenComputers в Minecraft и разворачиваю сервисы на нестандартном железе,
+              например этот сайт.
+            </p>
+            <p class="muted">
+              Мне интересно всё, что делает привычные вещи проще, быстрее и умнее. Постоянно ищу новые
+              задачи, на которых можно вырасти.
+            </p>
+          </div>
+
+          <ul class="interests">
+            <li class="interest card reveal">
+              <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v3M12 18v3M3 12h3M18 12h3M5.6 5.6l2.1 2.1M16.3 16.3l2.1 2.1M5.6 18.4l2.1-2.1M16.3 7.7l2.1-2.1"/><circle cx="12" cy="12" r="3.2"/></svg>
+              <h3>Автоматизация</h3>
+              <p>Скрипты, уведомления, трекеры и сервисы, которые работают без человека.</p>
+            </li>
+            <li class="interest card reveal">
+              <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 7 3 12l5 5M16 7l5 5-5 5M14 4l-4 16"/></svg>
+              <h3>API и интеграции</h3>
+              <p>Связываю внешние сервисы и платформы в единую экосистему.</p>
+            </li>
+            <li class="interest card reveal">
+              <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="2.5" y="7" width="19" height="11" rx="5"/><path d="M7 10.5v4M5 12.5h4"/><circle cx="16" cy="11.5" r=".6"/><circle cx="18" cy="13.5" r=".6"/></svg>
+              <h3>Инструменты для гейминга</h3>
+              <p>Утилиты, панели и помощники, чтобы играть было удобнее.</p>
+            </li>
+            <li class="interest card reveal">
+              <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4" width="18" height="6" rx="1.5"/><rect x="3" y="14" width="18" height="6" rx="1.5"/><path d="M7 7h.01M7 17h.01M11 7h6M11 17h6"/></svg>
+              <h3>Self-hosting / DevOps</h3>
+              <p>Сервисы на старых телефонах и мини-ПК, тюнинг и надёжность.</p>
+            </li>
+            <li class="interest card reveal">
+              <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="6" cy="6" r="2.5"/><circle cx="6" cy="18" r="2.5"/><circle cx="18" cy="8" r="2.5"/><path d="M6 8.5v7M18 10.5c0 4-6 3-11 6"/></svg>
+              <h3>Open-source</h3>
+              <p>Открываю свой код, изучаю чужой и делюсь опытом.</p>
+            </li>
+            <li class="interest card reveal">
+              <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M13 2 4 14h7l-1 8 9-12h-7z"/></svg>
+              <h3>Оптимизация</h3>
+              <p>Ищу узкие места, меряю производительность, ускоряю код.</p>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== СТЕК ===== -->
+    <section class="section" id="skills" aria-labelledby="skills-title">
+      <div class="container">
+        <header class="section__head reveal">
+          <p class="section__kicker mono">// 02</p>
+          <h2 class="section__title" id="skills-title">Навыки и стек</h2>
+        </header>
+
+        <ul class="stack">
+          <li class="chip reveal"><span class="chip__badge" style="--c:#f7df1e">JS</span>JavaScript</li>
+          <li class="chip reveal"><span class="chip__badge" style="--c:#5fa04e">⬢</span>Node.js</li>
+          <li class="chip reveal"><span class="chip__badge" style="--c:#6b7cff">Lua</span>Lua</li>
+          <li class="chip reveal"><span class="chip__badge" style="--c:#22d3ee">OC</span>OpenComputers API</li>
+          <li class="chip reveal"><img src="assets/frontend-logo.png" alt="" width="28" height="28" loading="lazy" />HTML</li>
+          <li class="chip reveal"><span class="chip__badge" style="--c:#d946ef">{ }</span>CSS</li>
+          <li class="chip reveal"><img src="assets/discord-logo.png" alt="" width="28" height="28" loading="lazy" />Discord API</li>
+          <li class="chip reveal"><img src="assets/telegram-logo.png" alt="" width="28" height="28" loading="lazy" />Telegram API</li>
+          <li class="chip reveal"><img class="invert" src="assets/github-logo.svg" alt="" width="28" height="28" loading="lazy" />Git</li>
+          <li class="chip reveal"><img src="assets/electron-logo.png" alt="" width="28" height="28" loading="lazy" />Electron</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ===== ПРОЕКТЫ ===== -->
+    <section class="section" id="projects" aria-labelledby="projects-title">
+      <div class="container">
+        <header class="section__head reveal">
+          <p class="section__kicker mono">// 03</p>
+          <h2 class="section__title" id="projects-title">Проекты</h2>
+        </header>
+
+        <div class="filter reveal" role="group" aria-label="Фильтр проектов по статусу">
+          <button class="filter__btn is-active" type="button" data-filter="all" aria-pressed="true">Все <span class="filter__count"></span></button>
+          <button class="filter__btn" type="button" data-filter="release" aria-pressed="false">В релизе <span class="filter__count"></span></button>
+          <button class="filter__btn" type="button" data-filter="dev" aria-pressed="false">В разработке <span class="filter__count"></span></button>
+          <button class="filter__btn" type="button" data-filter="dropped" aria-pressed="false">Брошено <span class="filter__count"></span></button>
+        </div>
+
+        <ul class="projects" id="projects-list">
+          <li class="project card reveal" data-status="dev">
+            <span class="status status--dev">В разработке</span>
+            <h3 class="project__title">NW Team Bot</h3>
+            <p class="project__desc">
+              Discord↔Telegram бот для сообщества ༺NW༻: приветствия, автоприём в клан, анкеты для новичков,
+              модерация, полное логирование и синхронизация сообщений между платформами.
+            </p>
+            <ul class="tags"><li>JavaScript</li><li>Node.js</li><li>Telegram Bot API</li><li>Discord.js</li></ul>
+            <a class="project__link" href="https://discord.gg/T7ty2DppcA" target="_blank" rel="noopener">Discord-сервер ↗</a>
+          </li>
+
+          <li class="project card reveal" data-status="dev" id="project-las">
+            <span class="status status--dev">В разработке</span>
+            <h3 class="project__title">Live Audio Stream</h3>
+            <p class="project__desc">
+              Онлайн-радио для mp3, переписанное с нуля: сервер и клиент переехали с Electron на веб-стек
+              и стабильно держат много слушателей одновременно. Репозиторий откроется после релиза.
+            </p>
+            <ul class="tags"><li>Node.js</li><li>JavaScript</li><li>HTML</li><li>CSS</li><li>nginx</li></ul>
+            <a class="project__link" href="https://github.com/P1KaChU337/Live-Audio-Stream" target="_blank" rel="noopener">GitHub ↗</a>
+          </li>
+
+          <li class="project card reveal" data-status="release">
+            <span class="status status--release">В релизе</span>
+            <h3 class="project__title">Reactor Control for OpenComputers</h3>
+            <p class="project__desc">
+              Система управления ядерным реактором на OpenComputers для Minecraft-сервера MCSkill / Enthusiasm.
+            </p>
+            <ul class="tags"><li>Lua</li><li>OpenComputers API</li><li>Minecraft</li></ul>
+            <a class="project__link" href="https://github.com/P1KaChU337/Reactor-Control-for-OpenComputers" target="_blank" rel="noopener">GitHub ↗</a>
+          </li>
+
+          <li class="project card reveal" data-status="release">
+            <span class="status status--release">В релизе</span>
+            <h3 class="project__title">Auto Voting for McSkill</h3>
+            <p class="project__desc">
+              Браузерное расширение, которое само голосует за сервер McSkill.
+            </p>
+            <ul class="tags"><li>JavaScript</li><li>HTML</li><li>CSS</li><li>Browser Extension</li></ul>
+            <a class="project__link" href="https://github.com/P1KaChU337/Auto-Voting-for-McSkill-by-P1KaChU337" target="_blank" rel="noopener">GitHub ↗</a>
+          </li>
+
+          <li class="project card reveal" data-status="release">
+            <span class="status status--release">В релизе</span>
+            <h3 class="project__title">Live Audio Stream Server MCSkill</h3>
+            <p class="project__desc">
+              Electron-сервер онлайн-радио для MCSkill. Поддержка завершена на v1.2.2, ему на смену пришёл Live Audio Stream.
+            </p>
+            <ul class="tags"><li>Electron</li><li>JavaScript</li><li>HTML</li><li>CSS</li></ul>
+            <a class="project__link" href="https://github.com/P1KaChU337/Live-Audio-Stream-Server-MCSkill" target="_blank" rel="noopener">GitHub ↗</a>
+          </li>
+
+          <li class="project card reveal" data-status="dropped">
+            <span class="status status--dropped">Брошено</span>
+            <h3 class="project__title">Looniee Discord Bot</h3>
+            <p class="project__desc">
+              Многофункциональный Discord-бот с утилитами и развлекательными командами.
+            </p>
+            <ul class="tags"><li>JavaScript</li><li>Node.js</li><li>Discord.js</li><li>DBM</li></ul>
+            <a class="project__link" href="https://github.com/P1KaChU337/Looniee" target="_blank" rel="noopener">GitHub ↗</a>
+          </li>
+
+          <li class="project card reveal" data-status="dropped">
+            <span class="status status--dropped">Брошено</span>
+            <h3 class="project__title">Discord-Telegram Bridge</h3>
+            <p class="project__desc">
+              Мост для пересылки сообщений между Discord и Telegram. Стал основой для NW Team Bot.
+            </p>
+            <ul class="tags"><li>JavaScript</li><li>Node.js</li><li>Telegram Bot API</li><li>Discord.js</li></ul>
+            <span class="project__link project__link--off">Исходники закрыты</span>
+          </li>
+
+          <li class="project card reveal" data-status="dropped">
+            <span class="status status--dropped">Брошено</span>
+            <h3 class="project__title">Казино для OpenComputers</h3>
+            <p class="project__desc">
+              Мини-игры на выигрыш для Minecraft с регистрацией, авторизацией и лицензированием.
+            </p>
+            <ul class="tags"><li>Lua</li><li>OpenComputers API</li><li>Minecraft</li></ul>
+            <span class="project__link project__link--off">Исходники закрыты</span>
+          </li>
+        </ul>
+        <p class="projects__empty muted" hidden>В этой категории пока пусто.</p>
+      </div>
+    </section>
+
+    <!-- ===== PIKAZAPPS STUDIO ===== -->
+    <section class="section" id="studio" aria-labelledby="studio-title">
+      <div class="container">
+        <header class="section__head reveal">
+          <p class="section__kicker mono">// 04</p>
+          <h2 class="section__title" id="studio-title">PikaZapps Studio <span class="muted">· заказы</span></h2>
+          <p class="section__sub">Нужен бот, утилита или веб-сервис? Сделаю под вашу задачу.</p>
+        </header>
+
+        <ul class="services">
+          <li class="service card reveal">
+            <img src="assets/discord-logo.png" alt="" width="44" height="44" loading="lazy" />
+            <h3>Discord боты</h3>
+            <p>От простых команд до систем с базами данных, ролями, автоматизацией и интеграциями (YouTube, Twitch, любые API).</p>
+          </li>
+          <li class="service card reveal">
+            <img src="assets/telegram-logo.png" alt="" width="44" height="44" loading="lazy" />
+            <h3>Telegram боты</h3>
+            <p>Администрирование чатов, уведомления, inline-меню, платежи и полноценные сервисы внутри Telegram.</p>
+          </li>
+          <li class="service card reveal">
+            <img src="assets/frontend-logo.png" alt="" width="44" height="44" loading="lazy" />
+            <h3>Веб-проекты</h3>
+            <p>Лендинги, панели управления ботами, SPA, REST API и работа с базами данных.</p>
+          </li>
+          <li class="service card reveal">
+            <img src="assets/electron-logo.png" alt="" width="44" height="44" loading="lazy" />
+            <h3>Electron приложения</h3>
+            <p>Кроссплатформенные десктоп-утилиты, менеджеры и панели для Windows, Linux и macOS.</p>
+          </li>
+          <li class="service card reveal">
+            <img src="assets/custom-logo.png" alt="" width="44" height="44" loading="lazy" />
+            <h3>Индивидуальные проекты</h3>
+            <p>Есть уникальная идея? Сделаю под ключ: от прототипа до релиза, помогу выбрать стек.</p>
+          </li>
+          <li class="service service--cta card reveal">
+            <h3>Обсудим?</h3>
+            <p>Опишите задачу в Telegram или Discord, отвечу и предложу решение.</p>
+            <a class="btn btn--primary" href="#contacts">Обсудить проект</a>
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- ===== ФАКТ: сайт на старом телефоне ===== -->
+    <section class="section" id="fact" aria-labelledby="fact-title">
+      <div class="container fact">
+        <div class="fact__text reveal">
+          <p class="section__kicker mono">// fun fact</p>
+          <h2 class="section__title" id="fact-title">Этот сайт работает на&nbsp;старом телефоне</h2>
+          <p>
+            Хостинга и белого IP у меня нет, поэтому сайт крутится на старом смартфоне:
+            <b>Termux</b> с Ubuntu внутри, а наружу его выводит туннель
+            <a class="link" href="https://cloudpub.ru" target="_blank" rel="noopener">CloudPub</a>.
+            Это мой личный полигон для self-hosting экспериментов.
+          </p>
+          <div class="fact__btns">
+            <a class="btn btn--ghost btn--sm" href="https://cloudpub.ru" target="_blank" rel="noopener">
+              <svg class="icon icon--sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 18h10a4 4 0 0 0 .6-7.95A6 6 0 0 0 6.1 9.2 4.5 4.5 0 0 0 7 18z"/></svg>
+              CloudPub
+            </a>
+            <a class="btn btn--ghost btn--sm" href="https://boosty.to/p1kachu337" target="_blank" rel="noopener">
+              <svg class="icon icon--sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10z"/></svg>
+              Поддержать на Boosty
+            </a>
+          </div>
+        </div>
+
+        <div class="term reveal" role="img" aria-label="Терминал: запуск сайта в Termux и публикация через CloudPub">
+          <div class="ide__bar">
+            <span class="ide__dots"><i></i><i></i><i></i></span>
+            <span class="ide__tab mono">termux — ~/pikazapps</span>
+          </div>
+          <pre class="term__body mono" id="term" aria-hidden="true"></pre>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===== КОНТАКТЫ ===== -->
+    <section class="section" id="contacts" aria-labelledby="contacts-title">
+      <div class="container">
+        <header class="section__head reveal">
+          <p class="section__kicker mono">// 05</p>
+          <h2 class="section__title" id="contacts-title">Контакты</h2>
+          <p class="section__sub">Пишите по заказам, идеям или просто так. Быстрее всего отвечаю в Telegram и Discord.</p>
+        </header>
+
+        <ul class="contacts">
+          <li>
+            <a class="contact card reveal" href="https://t.me/sh1zurz" target="_blank" rel="noopener" aria-label="Telegram: @sh1zurz">
+              <img src="assets/telegram-logo.png" alt="" width="40" height="40" loading="lazy" />
+              <span><b>Telegram</b><small class="mono">@sh1zurz</small></span>
+            </a>
+          </li>
+          <li>
+            <a class="contact card reveal" href="https://discord.com/users/p1kachu337" target="_blank" rel="noopener" aria-label="Discord: p1kachu337">
+              <img src="assets/discord-logo.png" alt="" width="40" height="40" loading="lazy" />
+              <span><b>Discord</b><small class="mono">p1kachu337</small></span>
+            </a>
+          </li>
+          <li>
+            <a class="contact card reveal" href="https://vk.com/p1kachu337" target="_blank" rel="noopener" aria-label="ВКонтакте: p1kachu337">
+              <img src="assets/vk-logo.png" alt="" width="40" height="40" loading="lazy" />
+              <span><b>VK</b><small class="mono">p1kachu337</small></span>
+            </a>
+          </li>
+          <li>
+            <a class="contact card reveal" href="https://github.com/P1KaChU337" target="_blank" rel="noopener" aria-label="GitHub: P1KaChU337">
+              <img class="invert" src="assets/github-logo.svg" alt="" width="40" height="40" loading="lazy" />
+              <span><b>GitHub</b><small class="mono">P1KaChU337</small></span>
+            </a>
+          </li>
+          <li>
+            <a class="contact contact--boosty card reveal" href="https://boosty.to/p1kachu337" target="_blank" rel="noopener" aria-label="Boosty: поддержать p1kachu337">
+              <!-- самописная мини-иконка Boosty -->
+              <svg class="contact__svg" viewBox="0 0 40 40" width="40" height="40" aria-hidden="true">
+                <rect x="1" y="1" width="38" height="38" rx="10" fill="none" stroke="currentColor" stroke-width="2"/>
+                <path d="M15 10h7a5 5 0 0 1 1.5 9.8A5.5 5.5 0 0 1 22 30h-7z" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linejoin="round"/>
+                <path d="M15 20h7" stroke="currentColor" stroke-width="2.4"/>
+              </svg>
+              <span><b>Boosty</b><small class="mono">поддержать</small></span>
+            </a>
+          </li>
+        </ul>
+      </div>
+    </section>
+  </main>
+
+  <!-- ===== FOOTER ===== -->
+  <footer class="footer">
+    <div class="container footer__inner">
+      <img src="assets/pz_icon.png" alt="" width="40" height="30" loading="lazy" />
+      <p>© <span id="year">2026</span> PikaZapps <span class="muted">by P1KaChU337 / Senko__</span></p>
+      <p class="mono muted footer__host">served from an old phone ✦ Termux + CloudPub</p>
+    </div>
+  </footer>
+
+  <button class="to-top" type="button" aria-label="Наверх">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 14l6-6 6 6"/></svg>
+  </button>
+
+  <script src="main.js" defer></script>
+</body>
+</html>
