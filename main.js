@@ -26,6 +26,7 @@ if (typeof window === 'undefined') {
     '.webp': 'image/webp',
     '.ico': 'image/x-icon',
     '.txt': 'text/plain; charset=utf-8',
+    '.md': 'text/plain; charset=utf-8',
     '.xml': 'application/xml; charset=utf-8',
   };
 
@@ -298,6 +299,31 @@ if (typeof window === 'undefined') {
       clearTimeout(timer);
       el.textContent = ROLES[0];
     });
+  })();
+
+  /* ---------- Лёгкий параллакс фото-полос ---------- */
+  (() => {
+    const bands = $$('.band');
+    if (!bands.length) return;
+    const visible = new Set();
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((e) => (e.isIntersecting ? visible.add(e.target) : visible.delete(e.target)));
+    });
+    bands.forEach((b) => io.observe(b));
+    let queued = false;
+    const update = () => {
+      queued = false;
+      if (reducedMotion()) return;
+      const vh = window.innerHeight;
+      visible.forEach((b) => {
+        const r = b.getBoundingClientRect();
+        // -1..1: положение центра полосы относительно центра экрана
+        const k = (r.top + r.height / 2 - vh / 2) / (vh / 2 + r.height / 2);
+        b.style.setProperty('--py', `${(k * r.height * 0.1).toFixed(1)}px`);
+      });
+    };
+    window.addEventListener('scroll', () => { if (!queued) { queued = true; requestAnimationFrame(update); } }, { passive: true });
+    update();
   })();
 
   /* ---------- Часы в шапке ---------- */
