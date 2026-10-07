@@ -506,7 +506,7 @@ b { font-weight: 600; color: var(--text); }
 .status--release { color: var(--cyan); }
 .status--dev { color: #f0abfc; }
 .status--dev::before { animation: blink 1.4s steps(1) infinite; }
-.status--dropped { color: var(--text-mute); }
+.status--dropped { color: #f87171; }
 .projects__empty { padding: 30px 0; }
 
 /* ---------- 12. Studio ---------- */

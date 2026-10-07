@@ -121,8 +121,7 @@
           <div class="readout__cell readout__cell--wide">
             <dt>now_building</dt>
             <dd>
-              <a href="#project-nw">NW Team Bot</a> <span class="muted">/</span>
-              <a href="#project-las">Live Audio Stream</a>
+              <p style="color:#ff6767; text-shadow: 0 0 8px #e24c4c;">На данный момент активных разработок нет или они секретны <3</p>
             </dd>
           </div>
         </dl>
@@ -156,7 +155,7 @@
           <div class="about__body">
             <div class="about__text reveal">
               <p class="about__lead">
-                В сети я <b class="hl">xSEnK0.sh</b>, а вообще Станислав. Раньше подписывался
+                В сети я <b class="hl">xSEnK0.sh</b>, а вообще меня зовут Станислав. Раньше ещё подписывался как
                 P1KaChU337 и Senko__.
               </p>
               <p>
@@ -184,7 +183,7 @@
 
     <!-- ===== Фото-полоса 1 ===== -->
     <figure class="band" aria-label="Неоновая улица ночью под дождём">
-      <img class="band__img" src="assets/img/photos/rain-street.webp" alt="" width="1024" height="637" loading="lazy" decoding="async" />
+      <img class="band__img" src="assets/img/photos/city3.jpg" alt="" width="1920" height="1080" loading="lazy" decoding="async" />
       <figcaption class="container band__inner">
         <span class="band__meta mono">35.69°N 139.70°E <span class="accent">//</span> rain.exe</span>
         <p class="band__text">автоматизирую всё,<br />что <span class="hl">движется</span></p>
@@ -216,7 +215,7 @@
           </ul>
 
           <figure class="skills__art frame reveal">
-            <img src="assets/img/circuit.webp" alt="Неоновая печатная плата с чипом xS" width="1200" height="900" loading="lazy" decoding="async" />
+            <img src="assets/img/stack.png" alt="Неоновая печатная плата с чипом xS" width="1200" height="900" loading="lazy" decoding="async" />
             <figcaption class="frame__cap mono">pcb: PZ-337 · rev 2026</figcaption>
           </figure>
         </div>
@@ -241,30 +240,30 @@
         </div>
 
         <ul class="projects">
-          <li class="proj reveal" data-status="dev" id="project-nw">
-            <figure class="proj__cover"><img src="assets/img/nwbot.webp" alt="Обложка NW Team Bot: щит NW и сообщения на орбите" width="960" height="600" loading="lazy" decoding="async" /></figure>
+          <li class="proj reveal" data-status="dropped" id="project-nw">
+            <figure class="proj__cover"><img src="assets/img/teamnw.png" alt="Обложка NW Team Bot: щит NW и сообщения на орбите" width="960" height="600" loading="lazy" decoding="async" /></figure>
             <div class="proj__body">
-              <p class="proj__meta mono"><span class="proj__idx">P.01</span><span class="status status--dev">в разработке</span></p>
+              <p class="proj__meta mono"><span class="proj__idx">P.01</span><span class="status status--dropped">брошено</span></p>
               <h3 class="proj__title">NW Team Bot</h3>
-              <p class="proj__desc">Discord↔Telegram бот для сообщества NW: приветствия, автоприём в клан, анкеты для новичков, модерация, полное логирование и синхронизация сообщений между платформами.</p>
+              <p class="proj__desc">Discord↔Telegram бот для сообщества NW: приветствия, автоприём в клан, анкеты для новичков, модерация, полное логирование и синхронизация сообщений между платформами. Разработка прекращена так как клан распался.</p>
               <ul class="tags mono"><li>JavaScript</li><li>Node.js</li><li>Telegram Bot API</li><li>Discord.js</li></ul>
             </div>
-            <a class="proj__link mono" href="https://discord.gg/T7ty2DppcA" target="_blank" rel="noopener">discord ↗</a>
+            <a class="proj__link mono" href="https://discord.gg/xSc6YKPMWx" target="_blank" rel="noopener">discord ↗</a>
           </li>
 
-          <li class="proj reveal" data-status="dev" id="project-las">
-            <figure class="proj__cover"><img src="assets/img/las.webp" alt="Обложка Live Audio Stream: аудиоспектр и табло ON AIR" width="960" height="600" loading="lazy" decoding="async" /></figure>
+          <li class="proj reveal" data-status="release" id="project-las">
+            <figure class="proj__cover"><img src="assets/img/lass.jpg" alt="Обложка Live Audio Stream: аудиоспектр и табло ON AIR" width="960" height="600" loading="lazy" decoding="async" style="height:190%;"/></figure>
             <div class="proj__body">
-              <p class="proj__meta mono"><span class="proj__idx">P.02</span><span class="status status--dev">в разработке</span></p>
+              <p class="proj__meta mono"><span class="proj__idx">P.02</span><span class="status status--release">в релизе</span></p>
               <h3 class="proj__title">Live Audio Stream</h3>
-              <p class="proj__desc">Онлайн-радио для mp3, переписанное с нуля: сервер и клиент переехали с Electron на веб-стек и стабильно держат много слушателей одновременно. Репозиторий откроется после релиза.</p>
+              <p class="proj__desc">Онлайн-радио для mp3, переписанное с нуля: сервер и клиент переехали с Electron на веб-стек и стабильно держат несколько слушателей одновременно. Репозиторий откроется после релиза.</p>
               <ul class="tags mono"><li>Node.js</li><li>JavaScript</li><li>HTML</li><li>CSS</li><li>nginx</li></ul>
             </div>
             <a class="proj__link mono" href="https://github.com/P1KaChU337/Live-Audio-Stream" target="_blank" rel="noopener">github ↗</a>
           </li>
 
           <li class="proj reveal" data-status="release">
-            <figure class="proj__cover"><img src="assets/img/reactor.webp" alt="Обложка Reactor Control: активная зона реактора и датчик" width="960" height="600" loading="lazy" decoding="async" /></figure>
+            <figure class="proj__cover"><img src="assets/img/reactor.png" alt="Обложка Reactor Control: активная зона реактора и датчик" width="960" height="600" loading="lazy" decoding="async" /></figure>
             <div class="proj__body">
               <p class="proj__meta mono"><span class="proj__idx">P.03</span><span class="status status--release">в релизе</span></p>
               <h3 class="proj__title">Reactor Control for OpenComputers</h3>
@@ -319,7 +318,7 @@
           </li>
 
           <li class="proj reveal" data-status="dropped">
-            <figure class="proj__cover"><img src="assets/img/casino.webp" alt="Обложка казино для OpenComputers: барабаны 777 и игральная кость" width="960" height="600" loading="lazy" decoding="async" /></figure>
+            <figure class="proj__cover"><img src="assets/img/casik.png" alt="Обложка казино для OpenComputers: барабаны 777 и игральная кость" width="960" height="600" loading="lazy" decoding="async" /></figure>
             <div class="proj__body">
               <p class="proj__meta mono"><span class="proj__idx">P.08</span><span class="status status--dropped">брошено</span></p>
               <h3 class="proj__title">Казино для OpenComputers</h3>
@@ -360,8 +359,8 @@
             <span class="tile__cap mono">IMG_004 · pcb</span>
           </li>
           <li class="tile tile--w reveal">
-            <img src="assets/img/photos/code-laptop.webp" alt="ноутбук с кодом" width="960" height="540" loading="lazy" decoding="async" />
-            <span class="tile__cap mono">IMG_005 · code</span>
+            <img src="assets/img/photos/aerial.webp" alt="аэрофото города" width="960" height="540" loading="lazy" decoding="async" />
+            <span class="tile__cap mono">IMG_005 · city</span>
           </li>
           <li class="tile reveal">
             <img src="assets/img/photos/old-phones.webp" alt="коллекция старых телефонов" width="1024" height="768" loading="lazy" decoding="async" />
@@ -369,7 +368,7 @@
           </li>
           <li class="tile tile--w reveal">
             <img src="assets/img/photos/neon-arrow.webp" alt="неоновая стрелка" width="960" height="647" loading="lazy" decoding="async" />
-            <span class="tile__cap mono">IMG_007 · signal</span>
+            <span class="tile__cap mono">IMG_007 · nails</span>
           </li>
           <li class="tile reveal">
             <img src="assets/img/photos/garage.webp" alt="въезд в ночной паркинг" width="960" height="637" loading="lazy" decoding="async" />
@@ -377,7 +376,7 @@
           </li>
           <li class="tile tile--w reveal">
             <img src="assets/img/photos/trails.webp" alt="световые следы" width="1024" height="683" loading="lazy" decoding="async" />
-            <span class="tile__cap mono">IMG_009 · trails</span>
+            <span class="tile__cap mono">IMG_009 · signal</span>
           </li>
           <li class="tile tile--w reveal">
             <img src="assets/img/photos/bokeh.webp" alt="размытые неоновые огни" width="960" height="640" loading="lazy" decoding="async" />
@@ -423,10 +422,10 @@
 
     <!-- ===== Фото-полоса 2 ===== -->
     <figure class="band band--right" aria-label="Ночной город с высоты">
-      <img class="band__img" src="assets/img/photos/aerial.webp" alt="" width="1024" height="669" loading="lazy" decoding="async" />
+      <img class="band__img" src="assets/img/photos/ity.jpg" alt="" width="1024" height="669" loading="lazy" decoding="async" />
       <figcaption class="container band__inner">
         <span class="band__meta mono">uplink: cloudpub <span class="accent">//</span> 24/7</span>
-        <p class="band__text">интернет большой,<br />а мой сервер <span class="hl">в&nbsp;кармане</span></p>
+        <p class="band__text">интернет огромен,<br />а мой сервер <span class="hl"> в&nbsp;кармане</span></p>
       </figcaption>
     </figure>
 
@@ -439,22 +438,22 @@
 
         <div class="fact__body">
           <header class="sec-head sec-head--plain reveal">
-            <span class="sec-head__idx mono">!</span>
+            <span class="sec-head__idx mono">:3</span>
             <span class="sec-head__tag mono">// fun fact</span>
           </header>
           <h2 class="fact__title reveal" id="fact-title">Этот сайт работает на&nbsp;старом телефоне</h2>
           <p class="fact__text reveal">
-            Хостинга и белого IP нет, поэтому сайт крутится на старом смартфоне в Termux,
+            Хостинга и белого IP у меня нет, поэтому этот сайт крутится на старом смартфоне в Termux,
             а наружу его выводит туннель <a class="link" href="https://cloudpub.ru" target="_blank" rel="noopener">CloudPub</a>.
-            Личный полигон для self-hosting экспериментов.
+            А ещё это просто один из моих экспериментов с self-hosting и DevOps.
           </p>
           <dl class="spec mono reveal">
-            <div><dt>device</dt><dd>старый смартфон, трещина в комплекте</dd></div>
+            <div><dt>device</dt><dd>Xiaomi Redmi Note 10 5G</dd></div>
             <div><dt>os</dt><dd>Ubuntu 25 · proot · Termux</dd></div>
-            <div><dt>server</dt><dd>node main.js</dd></div>
+            <!-- <div><dt>server</dt><dd>node main.js</dd></div> -->
             <div><dt>tunnel</dt><dd>CloudPub → pikazapps.cloudpub.ru</dd></div>
-            <div><dt>white_ip</dt><dd class="warn">не обнаружен</dd></div>
-            <div><dt>hosting_cost</dt><dd class="ok">0 ₽</dd></div>
+            <!-- <div><dt>white_ip</dt><dd class="warn">не обнаружен</dd></div> -->
+            <div><dt>hosting_cost</dt><dd class="ok">0 $</dd></div>
           </dl>
           <div class="fact__btns reveal">
             <a class="btn btn--ghost btn--sm" href="https://cloudpub.ru" target="_blank" rel="noopener">
