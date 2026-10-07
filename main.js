@@ -123,7 +123,7 @@ if (typeof window === 'undefined') {
 
   /* ---------- Фильтр проектов ---------- */
   const filterBtns = $$('.filter__btn');
-  const projects = $$('.project');
+  const projects = $$('.proj');
   const emptyMsg = $('.projects__empty');
   filterBtns.forEach((btn) => {
     const f = btn.dataset.filter;
