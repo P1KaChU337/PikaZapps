@@ -72,6 +72,127 @@ if (typeof window === 'undefined') {
   const $$ = (s, root = document) => [...root.querySelectorAll(s)];
   const motionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
   const reducedMotion = () => motionQuery.matches;
+  /** Вызвать cb, когда заставка закончилась (класс is-booted на <html>) */
+  const whenBooted = (cb) => {
+    const root = document.documentElement;
+    if (root.classList.contains('is-booted')) return cb();
+    const mo = new MutationObserver(() => {
+      if (root.classList.contains('is-booted')) { mo.disconnect(); cb(); }
+    });
+    mo.observe(root, { attributes: true, attributeFilter: ['class'] });
+  };
+
+  /* =================================================================
+     Заставка «загрузка системы»
+     Режим (полный / короткий / без заставки) выбирает inline-скрипт в <head>.
+     Прогресс ждёт и реального (шрифты, hero-картинка, load), и минимального времени.
+     ================================================================= */
+  (() => {
+    const root = document.documentElement;
+    const boot = $('#boot');
+    if (!boot || !root.classList.contains('boot-pending')) {
+      root.classList.add('is-booted');
+      return;
+    }
+    const fast = root.classList.contains('boot-fast');
+    const MIN = fast ? 600 : 1900;   // мс: не короче
+    const MAX = fast ? 2500 : 4500;  // мс: не дольше, даже если что-то грузится медленно
+    const NICK = 'xSEnK0.sh';
+    const GLYPHS = 'アイウエオカキクケコサシスセソ01#$%*+=?';
+    const LOG = [
+      [6, 'mounting /dev/old-phone'],
+      [20, 'starting termux · ubuntu 25'],
+      [36, 'node main.js → :8080'],
+      [52, 'tunnel cloudpub: up'],
+      [68, 'loading neon.css · fonts'],
+      [84, 'decrypting xSEnK0.sh'],
+      [100, 'welcome'],
+    ];
+    const fill = $('#boot-fill');
+    const pct = $('#boot-pct');
+    const status = $('#boot-status');
+    const log = $('#boot-log');
+    const title = $('#boot-title');
+    $('#boot-clock').textContent = new Date().toLocaleTimeString('ru-RU');
+
+    // реальная загрузка
+    const heroImg = $('.hero__bg');
+    const tasks = [
+      document.fonts ? document.fonts.ready : Promise.resolve(),
+      heroImg && !heroImg.complete
+        ? new Promise((r) => { heroImg.addEventListener('load', r, { once: true }); heroImg.addEventListener('error', r, { once: true }); })
+        : Promise.resolve(),
+      document.readyState === 'complete' ? Promise.resolve() : new Promise((r) => window.addEventListener('load', r, { once: true })),
+    ];
+    let loaded = 0;
+    tasks.forEach((t) => t.then(() => { loaded++; }, () => { loaded++; }));
+
+    const t0 = performance.now();
+    let shown = 0, logIdx = 0, lastScramble = 0, skip = false, finished = false, raf = 0;
+
+    const renderTitle = (revealed) => {
+      title.textContent = '';
+      for (let i = 0; i < NICK.length; i++) {
+        if (i < revealed) { title.append(NICK[i]); continue; }
+        const s = document.createElement('span');
+        s.className = 's';
+        s.textContent = GLYPHS[(Math.random() * GLYPHS.length) | 0];
+        title.append(s);
+      }
+    };
+
+    const addLog = (text) => {
+      if (fast) return;
+      const ok = document.createElement('span');
+      ok.className = 'ok';
+      ok.textContent = '[ ok ] ';
+      log.append(ok, text + '\n');
+    };
+
+    const finish = () => {
+      if (finished) return;
+      finished = true;
+      cancelAnimationFrame(raf);
+      title.textContent = NICK;
+      fill.style.transform = 'scaleX(1)';
+      pct.textContent = '100%';
+      try { sessionStorage.setItem('pz-boot', '1'); } catch (e) {}
+      boot.classList.add('is-leaving');
+      // классы меняем одновременно, иначе контент «проскочит» без анимации;
+      // задержка появления (пока половины разъезжаются) задана в CSS
+      root.classList.remove('boot-pending');
+      root.classList.add('is-booted');
+      setTimeout(() => boot.remove(), 1400);
+      window.removeEventListener('keydown', onSkip);
+    };
+    const onSkip = () => { skip = true; };
+    boot.addEventListener('click', onSkip);
+    window.addEventListener('keydown', onSkip);
+
+    const frame = (now) => {
+      const elapsed = now - t0;
+      let target = Math.min(loaded / tasks.length, elapsed / MIN);
+      if (elapsed > MAX || skip) target = 1;
+      shown += (target - shown) * (skip ? 0.35 : 0.1);
+      if (target === 1 && shown > 0.995) shown = 1;
+
+      fill.style.transform = `scaleX(${shown.toFixed(4)})`;
+      const p = Math.round(shown * 100);
+      pct.textContent = `${String(p).padStart(3, '0')}%`;
+      while (logIdx < LOG.length && p >= LOG[logIdx][0]) {
+        status.textContent = LOG[logIdx][1];
+        addLog(LOG[logIdx][1]);
+        logIdx++;
+      }
+      if (now - lastScramble > 55) { // «расшифровка» ника не чаще ~18 раз в секунду
+        lastScramble = now;
+        renderTitle(Math.floor(shown * NICK.length));
+      }
+      if (shown === 1) { renderTitle(NICK.length); setTimeout(finish, skip || fast ? 60 : 260); return; }
+      raf = requestAnimationFrame(frame);
+    };
+    raf = requestAnimationFrame(frame);
+  })();
 
   /* ---------- Год в футере ---------- */
   $('#year').textContent = new Date().getFullYear();
@@ -293,7 +414,7 @@ if (typeof window === 'undefined') {
         timer = setTimeout(tick, 45 + Math.random() * 50);
       }
     };
-    timer = setTimeout(tick, 3200);
+    whenBooted(() => { timer = setTimeout(tick, 2800); });
     motionQuery.addEventListener('change', () => {
       if (!reducedMotion()) return;
       clearTimeout(timer);

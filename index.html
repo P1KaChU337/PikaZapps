@@ -43,10 +43,40 @@
 
   <link rel="preload" as="image" href="assets/img/hero.webp" imagesrcset="assets/img/hero-960.webp 960w, assets/img/hero.webp 1920w" imagesizes="100vw" />
   <link rel="stylesheet" href="style.css" />
-  <script>document.documentElement.classList.add('js');</script>
+  <script>
+    /* JS включён + решаем, показывать ли заставку загрузки (подробности в main.js) */
+    (function () {
+      var d = document.documentElement;
+      d.classList.add('js');
+      if (window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+      var seen = false;
+      try { seen = sessionStorage.getItem('pz-boot') === '1'; } catch (e) {}
+      d.classList.add('boot-pending', seen ? 'boot-fast' : 'boot-full');
+      // страховка: если main.js не отработал, через 8 с всё равно показываем страницу
+      setTimeout(function () { d.classList.remove('boot-pending'); d.classList.add('is-booted'); }, 8000);
+    })();
+  </script>
 </head>
 <body>
   <a class="skip-link" href="#main">Перейти к содержимому</a>
+
+  <!-- ===== Заставка «загрузка системы» (управляется из main.js) ===== -->
+  <div class="boot" id="boot" aria-hidden="true">
+    <div class="boot__half boot__half--top"></div>
+    <div class="boot__half boot__half--bottom"></div>
+    <div class="boot__seam"></div>
+    <div class="boot__ui">
+      <span class="boot__corner boot__corner--tl mono">PZ-BIOS v3.37</span>
+      <span class="boot__corner boot__corner--tr mono" id="boot-clock">--:--:--</span>
+      <div class="boot__center">
+        <p class="boot__title" id="boot-title">xSEnK0.sh</p>
+        <div class="boot__bar"><i id="boot-fill"></i></div>
+        <div class="boot__meta mono"><span id="boot-status">initializing</span><span id="boot-pct">000%</span></div>
+      </div>
+      <pre class="boot__log mono" id="boot-log"></pre>
+      <span class="boot__corner boot__corner--br mono">click / any key — skip</span>
+    </div>
+  </div>
 
   <!-- ===== Фоновые слои: matrix-дождь, свечение, сетка; поверх — scanlines/noise ===== -->
   <div class="bg" aria-hidden="true">
@@ -90,18 +120,18 @@
            alt="" width="1920" height="1080" fetchpriority="high" decoding="async" />
 
       <div class="container hero__inner">
-        <p class="hero__cmd mono"><span class="prompt">~/pikazapps $</span> whoami</p>
-        <h1 class="hero__nick" id="hero-title">
+        <p class="hero__cmd mono" data-boot style="--i:0"><span class="prompt">~/pikazapps $</span> whoami</p>
+        <h1 class="hero__nick" id="hero-title" data-boot="wipe" style="--i:1">
           <span class="glitch" data-text="xSEnK0.sh">xSEnK0<span class="hero__ext">.sh</span></span>
         </h1>
-        <p class="hero__role mono" aria-live="off">
+        <p class="hero__role mono" aria-live="off" data-boot style="--i:3">
           <span class="accent">&gt;</span> <span id="role">пишу ботов для Discord и Telegram</span><span class="cursor" aria-hidden="true"></span>
         </p>
-        <p class="hero__lead">
+        <p class="hero__lead" data-boot style="--i:4">
           Делаю ботов, автоматизацию и self-hosted сервисы. Всё, что убирает рутину
           и склеивает разные платформы в одну систему.
         </p>
-        <div class="hero__cta">
+        <div class="hero__cta" data-boot style="--i:5">
           <a class="btn btn--primary" href="#projects">Проекты <span aria-hidden="true">→</span></a>
           <a class="btn btn--ghost" href="#contacts">Связаться</a>
         </div>
@@ -109,7 +139,7 @@
 
       <!-- HUD-полоса с «показаниями» -->
       <div class="container">
-        <dl class="readout mono">
+        <dl class="readout mono" data-boot style="--i:6">
           <div class="readout__cell">
             <dt>status</dt>
             <dd><span class="pulse" aria-hidden="true"></span> online</dd>
