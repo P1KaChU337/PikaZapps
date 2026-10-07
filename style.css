@@ -652,13 +652,21 @@ b { font-weight: 600; color: var(--text); }
 .contact__handle { font-size: .85rem; color: var(--text-dim); white-space: nowrap; }
 .contact__arrow { font-size: 1.2rem; color: var(--magenta); transition: transform var(--t) var(--ease); }
 .contact:hover .contact__arrow { transform: translate(4px, -4px); }
-.contact--boosty .contact__svg { color: #f97316; filter: drop-shadow(0 0 6px rgba(249, 115, 22, .5)); }
+/* знак Boosty занимает ~65% своего холста: рамка 48px вместо 36px выравнивает его визуально
+   с круглыми логотипами, а margin -6px сохраняет занимаемое место 36px, чтобы названия стояли на одной линии */
+.contact .contact__logo--boosty { width: 48px; height: 48px; margin: -6px; filter: drop-shadow(0 0 6px rgba(249, 115, 22, .45)); }
 @media (max-width: 480px) { .contact__dots { display: none; } .contact__handle { margin-left: auto; font-size: .75rem; } }
 
 /* ---------- 15. Footer и «Наверх» ---------- */
 .footer { border-top: 1px solid var(--line-strong); background: rgba(7, 5, 15, .8); padding: 24px 0 32px; }
 .footer__inner { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 18px; font-size: .8rem; }
-.footer__inner img { height: 30px; width: auto; object-fit: contain; }
+/* в pz_icon.png знак занимает ~40% картинки: делаем её крупнее, а пустые поля «съедаем» отрицательными отступами,
+   чтобы строка футера не росла по высоте */
+.footer__logo {
+  height: 52px; width: auto; object-fit: contain;
+  margin: -11px -12px -11px -18px;
+  filter: drop-shadow(0 0 8px rgba(245, 196, 81, .35));
+}
 .footer__host { margin-left: auto; font-size: .72rem; }
 @media (max-width: 640px) {
   .footer { padding-bottom: 84px; } /* место под кнопку «Наверх» */
