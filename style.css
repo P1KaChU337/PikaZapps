@@ -539,6 +539,72 @@ b { font-weight: 600; color: var(--text); }
 @media (max-width: 420px) { .spec div { grid-template-columns: 1fr; gap: 2px; } }
 .fact__btns { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 24px; }
 
+/* телефон «в отставке»: обесцвечен, с неоновой печатью */
+.fact__art--retired { position: relative; }
+.fact__art--retired img { filter: grayscale(.85) brightness(.75) contrast(1.05); transition: filter .6s; }
+.fact__art--retired:hover img { filter: none; }
+.fact__art--retired .frame__cap { text-align: center; }
+.stamp {
+  position: absolute; left: 50%; top: 44%;
+  transform: translate(-50%, -50%) rotate(-14deg);
+  display: grid; justify-items: center; gap: 2px;
+  padding: 10px 22px 8px;
+  font: 900 clamp(1.4rem, 5vw, 2.1rem)/1 var(--font-display);
+  letter-spacing: .14em; text-transform: uppercase;
+  color: var(--magenta);
+  border: 3px solid currentColor;
+  box-shadow: 0 0 18px rgba(217, 70, 239, .55), inset 0 0 18px rgba(217, 70, 239, .35);
+  text-shadow: 0 0 12px rgba(217, 70, 239, .8);
+  background: rgba(7, 5, 15, .55);
+  -webkit-backdrop-filter: blur(2px); backdrop-filter: blur(2px);
+  pointer-events: none;
+}
+.stamp small { font: 600 .6rem/1 var(--font-mono); letter-spacing: .3em; color: #f5d0fe; }
+
+/* «адресная строка» с доменом */
+.domain {
+  position: relative;
+  display: flex; align-items: center; gap: 14px; flex-wrap: wrap;
+  margin-top: 26px; padding: 16px 20px;
+  clip-path: var(--chamfer);
+  background:
+    linear-gradient(var(--bg-1), var(--bg-1)) padding-box,
+    linear-gradient(110deg, var(--neon), var(--magenta) 55%, var(--cyan)) border-box;
+  border: 1px solid transparent;
+  filter: drop-shadow(0 0 18px rgba(168, 85, 247, .35));
+  transition: filter var(--t), transform var(--t) var(--ease);
+}
+.domain:hover { filter: drop-shadow(0 0 28px rgba(217, 70, 239, .6)); transform: translateY(-2px); }
+.domain__lock { flex: none; width: 34px; height: 34px; display: grid; place-items: center; color: var(--ok); border: 1px solid rgba(62, 230, 168, .45); background: rgba(62, 230, 168, .08); }
+.domain__lock svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 2; }
+.domain__url {
+  flex: 1; min-width: 0;
+  font: 900 clamp(1.9rem, 8.5vw, 3.6rem)/1 var(--font-display);
+  letter-spacing: .01em; color: #f5efff;
+  text-shadow: var(--text-glow);
+  white-space: nowrap;
+}
+.domain__proto { font-size: .32em; font-weight: 400; color: var(--text-mute); text-shadow: none; vertical-align: .55em; margin-right: .3em; }
+.domain__tld { color: var(--cyan); text-shadow: 0 0 10px rgba(34, 211, 238, .8), 0 0 30px rgba(34, 211, 238, .4); }
+.domain__caret { display: inline-block; width: .08em; height: .85em; margin-left: .08em; vertical-align: -.05em; background: var(--magenta); box-shadow: var(--glow-sm); animation: blink 1s steps(1) infinite; }
+.domain__status { display: inline-flex; align-items: center; gap: 8px; font-size: .75rem; text-transform: uppercase; letter-spacing: .12em; color: var(--ok); }
+@media (max-width: 480px) { .domain__proto { display: none; } .domain__status { width: 100%; padding-left: 48px; } }
+
+/* было / стало в стиле git diff */
+.diff { margin-top: 22px; font-size: .84rem; border: 1px solid var(--line); background: rgba(7, 5, 15, .55); }
+.diff p { margin: 0; }
+.diff__head { padding: 8px 14px; color: var(--cyan); background: rgba(34, 211, 238, .06); border-bottom: 1px solid var(--line); font-size: .75rem; }
+.diff__row { display: grid; grid-template-columns: 22px 84px 1fr; gap: 8px; padding: 6px 14px; color: var(--text-dim); }
+.diff__row + .diff__row { border-top: 1px solid rgba(168, 85, 247, .07); }
+.diff__sign { font-weight: 700; }
+.diff__key { color: var(--text-mute); }
+.diff__row--del { background: rgba(255, 95, 135, .07); color: #ffb3c6; }
+.diff__row--del .diff__sign { color: #ff5f87; }
+.diff__row--del span:last-child { text-decoration: line-through; text-decoration-color: rgba(255, 95, 135, .55); }
+.diff__row--add { background: rgba(62, 230, 168, .08); color: #b6f7df; }
+.diff__row--add .diff__sign { color: var(--ok); }
+@media (max-width: 420px) { .diff__row { grid-template-columns: 18px 64px 1fr; padding-inline: 10px; } }
+
 /* ---------- 13b. Фото-полосы (full-bleed) ---------- */
 .band {
   position: relative; isolation: isolate; overflow: hidden;
@@ -816,6 +882,7 @@ b { font-weight: 600; color: var(--text); }
   .cursor { animation: none; }
   .ticker__track { animation: none; }
   .boot { display: none !important; }
+  .domain__caret { animation: none; }
   .band__img { transform: none !important; }
   .tile:hover img { transform: none; }
   .js .reveal { opacity: 1; transform: none; }

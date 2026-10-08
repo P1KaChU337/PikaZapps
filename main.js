@@ -100,10 +100,10 @@ if (typeof window === 'undefined') {
     const NICK = 'xSEnK0.sh';
     const GLYPHS = 'アイウエオカキクケコサシスセソ01#$%*+=?';
     const LOG = [
-      [6, 'mounting /dev/old-phone'],
-      [20, 'starting termux · ubuntu 25'],
-      [36, 'node main.js → :8080'],
-      [52, 'tunnel cloudpub: up'],
+      [6, 'old-phone: retired with honors'],
+      [20, 'resolving pzapps.uz'],
+      [36, 'git push origin main'],
+      [52, 'github pages: 200 ok'],
       [68, 'loading neon.css · fonts'],
       [84, 'decrypting xSEnK0.sh'],
       [100, 'welcome'],
@@ -391,7 +391,7 @@ if (typeof window === 'undefined') {
     const ROLES = [
       'пишу ботов для Discord и Telegram',
       'автоматизирую рутину',
-      'хостю сайты на старом телефоне',
+      'хостил сайт на старом телефоне',
       'скриптую OpenComputers на Lua',
       'склеиваю API в одну систему',
     ];
