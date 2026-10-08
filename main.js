@@ -101,7 +101,7 @@ if (typeof window === 'undefined') {
     const GLYPHS = 'アイウエオカキクケコサシスセソ01#$%*+=?';
     const LOG = [
       [6, 'old-phone: retired with honors'],
-      [20, 'resolving pzapps.uz'],
+      [20, 'resolving www.pzapps.uz'],
       [36, 'git push origin main'],
       [52, 'github pages: 200 ok'],
       [68, 'loading neon.css · fonts'],

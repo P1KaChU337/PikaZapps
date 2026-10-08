@@ -561,6 +561,19 @@ b { font-weight: 600; color: var(--text); }
 }
 .stamp small { font: 600 .6rem/1 var(--font-mono); letter-spacing: .3em; color: #f5d0fe; }
 
+/* «www.» в адресе: контурный неоновый текст (только обводка) */
+.www {
+  color: transparent;
+  -webkit-text-stroke: 1px var(--neon);
+  text-shadow: none;
+  filter: drop-shadow(0 0 6px rgba(168, 85, 247, .7));
+}
+.mono .www, .spec .www, .diff .www, .footer .www, .readout .www { /* в мелком моно-тексте обводка нечитаема — просто приглушаем */
+  color: var(--neon); -webkit-text-stroke: 0; filter: none; opacity: .85;
+}
+.nowrap { white-space: nowrap; }
+.band__text .www { -webkit-text-stroke-width: 1.5px; }
+
 /* «адресная строка» с доменом */
 .domain {
   position: relative;
@@ -579,12 +592,19 @@ b { font-weight: 600; color: var(--text); }
 .domain__lock svg { width: 18px; height: 18px; fill: none; stroke: currentColor; stroke-width: 2; }
 .domain__url {
   flex: 1; min-width: 0;
-  font: 900 clamp(1.9rem, 8.5vw, 3.6rem)/1 var(--font-display);
+  font: 900 clamp(1.45rem, 6vw, 3rem)/1 var(--font-display);
   letter-spacing: .01em; color: #f5efff;
   text-shadow: var(--text-glow);
   white-space: nowrap;
 }
 .domain__proto { font-size: .32em; font-weight: 400; color: var(--text-mute); text-shadow: none; vertical-align: .55em; margin-right: .3em; }
+/* размер адреса подстраивается под ширину самой плашки, чтобы www.pzapps.uz всегда влезал целиком */
+@supports (container-type: inline-size) {
+  .domain { container-type: inline-size; }
+  .domain__url { font-size: clamp(1.3rem, calc((100cqi - 210px) / 10.6), 3.2rem); }
+  @media (max-width: 480px) { .domain__url { font-size: clamp(1.2rem, calc((100cqi - 100px) / 8.4), 2.4rem); } }
+}
+.domain__url .www { -webkit-text-stroke-width: 1.5px; margin-right: .02em; }
 .domain__tld { color: var(--cyan); text-shadow: 0 0 10px rgba(34, 211, 238, .8), 0 0 30px rgba(34, 211, 238, .4); }
 .domain__caret { display: inline-block; width: .08em; height: .85em; margin-left: .08em; vertical-align: -.05em; background: var(--magenta); box-shadow: var(--glow-sm); animation: blink 1s steps(1) infinite; }
 .domain__status { display: inline-flex; align-items: center; gap: 8px; font-size: .75rem; text-transform: uppercase; letter-spacing: .12em; color: var(--ok); }
