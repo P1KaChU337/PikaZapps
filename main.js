@@ -265,6 +265,85 @@ if (typeof window === 'undefined') {
     });
   });
 
+  /* ---------- Галерея «Из жизни»: просмотр фото (lightbox) ---------- */
+  (() => {
+    const box = $('#lightbox');
+    const links = $$('.bento--life .tile__link');
+    if (!box || !links.length) return;
+    const img = $('.lightbox__img', box);
+    const count = $('.lightbox__count', box);
+    const text = $('.lightbox__text', box);
+    const btnPrev = $('.lightbox__btn--prev', box);
+    const btnNext = $('.lightbox__btn--next', box);
+    const btnClose = $('.lightbox__btn--close', box);
+    const items = links.map((a) => ({ src: a.dataset.full || a.href, caption: a.dataset.caption || '', alt: $('img', a).alt }));
+    const pad = (n) => String(n).padStart(2, '0');
+    let index = 0, opener = null;
+
+    const preload = (i) => { const im = new Image(); im.src = items[(i + items.length) % items.length].src; };
+    const show = (i) => {
+      index = (i + items.length) % items.length;
+      const it = items[index];
+      img.classList.add('is-loading');
+      const next = new Image();
+      next.onload = next.onerror = () => {
+        img.src = it.src;
+        img.alt = it.alt;
+        img.classList.remove('is-loading');
+      };
+      next.src = it.src;
+      count.textContent = `${pad(index + 1)} / ${pad(items.length)}`;
+      text.textContent = it.caption;
+      preload(index + 1); preload(index - 1);
+    };
+    const open = (i, from) => {
+      opener = from;
+      box.hidden = false;
+      document.documentElement.classList.add('lightbox-open');
+      requestAnimationFrame(() => box.classList.add('is-open'));
+      show(i);
+      btnClose.focus();
+    };
+    const close = () => {
+      box.classList.remove('is-open');
+      document.documentElement.classList.remove('lightbox-open');
+      setTimeout(() => { box.hidden = true; img.removeAttribute('src'); }, reducedMotion() ? 0 : 250);
+      if (opener) opener.focus();
+    };
+
+    links.forEach((a, i) => a.addEventListener('click', (e) => {
+      if (e.ctrlKey || e.metaKey || e.shiftKey || e.button !== 0) return; // открыть в новой вкладке — как обычно
+      e.preventDefault();
+      open(i, a);
+    }));
+    btnPrev.addEventListener('click', () => show(index - 1));
+    btnNext.addEventListener('click', () => show(index + 1));
+    btnClose.addEventListener('click', close);
+    box.addEventListener('click', (e) => { if (e.target === box || e.target.classList.contains('lightbox__frame')) close(); });
+
+    document.addEventListener('keydown', (e) => {
+      if (box.hidden) return;
+      if (e.key === 'Escape') close();
+      else if (e.key === 'ArrowLeft') show(index - 1);
+      else if (e.key === 'ArrowRight') show(index + 1);
+      else if (e.key === 'Tab') { // фокус не уходит из окна просмотра
+        const f = [btnPrev, btnNext, btnClose];
+        const k = f.indexOf(document.activeElement);
+        e.preventDefault();
+        f[(k + (e.shiftKey ? -1 : 1) + f.length) % f.length].focus();
+      }
+    });
+
+    // свайп на телефоне
+    let sx = 0, sy = 0;
+    box.addEventListener('touchstart', (e) => { sx = e.touches[0].clientX; sy = e.touches[0].clientY; }, { passive: true });
+    box.addEventListener('touchend', (e) => {
+      const dx = e.changedTouches[0].clientX - sx, dy = e.changedTouches[0].clientY - sy;
+      if (Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy)) show(index + (dx < 0 ? 1 : -1));
+      else if (dy > 90 && Math.abs(dy) > Math.abs(dx)) close(); // смахнуть вниз — закрыть
+    }, { passive: true });
+  })();
+
   /* ---------- Кнопка «Наверх» ---------- */
   const toTop = $('.to-top');
   let ticking = false;

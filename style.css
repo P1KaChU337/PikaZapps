@@ -705,6 +705,72 @@ b { font-weight: 600; color: var(--text); }
 .tile:hover img { transform: scale(1.07); filter: brightness(1.08) saturate(1.3); }
 .tile:hover::after { box-shadow: inset 0 0 0 1px var(--magenta), inset 0 0 40px rgba(217, 70, 239, .35); }
 
+/* галерея реальных фото «Из жизни» */
+.bento--life { grid-auto-rows: 150px; }
+@media (min-width: 760px) { .bento--life { grid-auto-rows: 200px; } }
+@media (min-width: 1800px) { .bento--life { grid-auto-rows: 260px; } }
+.tile__link { position: absolute; inset: 0; display: block; cursor: zoom-in; }
+.tile__link:focus-visible { outline-offset: -4px; }
+.bento--life .tile img { filter: brightness(.92); }
+.bento--life .tile::after { background: repeating-linear-gradient(0deg, rgba(0, 0, 0, .1) 0 1px, transparent 1px 3px); }
+.bento--life .tile:hover img { filter: brightness(1.04) saturate(1.08); }
+.tile__zoom {
+  position: absolute; top: 10px; right: 10px; z-index: 1;
+  width: 30px; height: 30px; display: grid; place-items: center;
+  font-size: .95rem; color: #fff; background: rgba(7, 5, 15, .65);
+  border: 1px solid var(--line-strong);
+  opacity: 0; transform: translateY(-4px); transition: opacity var(--t), transform var(--t) var(--ease);
+}
+.tile:hover .tile__zoom, .tile__link:focus-visible .tile__zoom { opacity: 1; transform: none; }
+@media (hover: none) { .tile__zoom { opacity: .85; transform: none; } }
+.tile--note { display: flex; align-items: flex-end; padding: 16px; background: linear-gradient(135deg, rgba(124, 58, 237, .28), rgba(162, 28, 175, .18)); }
+.tile--note p { font-size: .8rem; line-height: 1.6; color: var(--text-dim); }
+.tile--note b { font: 900 1.6rem/1 var(--font-display); color: #fff; text-shadow: var(--text-glow); }
+
+/* просмотр фото (lightbox) */
+.lightbox {
+  position: fixed; inset: 0; z-index: 150;
+  display: grid; place-items: center;
+  padding: 56px 64px;
+  background: rgba(7, 5, 15, .94);
+  -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px);
+  opacity: 0; transition: opacity .25s;
+}
+.lightbox[hidden] { display: none; }
+.lightbox.is-open { opacity: 1; }
+.lightbox__frame { display: grid; justify-items: center; gap: 14px; max-width: 100%; max-height: 100%; margin: 0; }
+.lightbox__img {
+  max-width: min(100%, 1600px); max-height: calc(100vh - 170px); max-height: calc(100dvh - 170px);
+  width: auto; height: auto; object-fit: contain;
+  border: 1px solid var(--line-strong);
+  box-shadow: 0 0 40px rgba(139, 92, 246, .35);
+  transition: opacity .2s, transform .25s var(--ease);
+}
+.lightbox__img.is-loading { opacity: .25; transform: scale(.985); }
+.lightbox__cap { display: flex; align-items: baseline; gap: 14px; max-width: 70ch; text-align: left; color: var(--text-dim); font-size: .92rem; }
+.lightbox__count { flex: none; color: var(--magenta); font-size: .78rem; letter-spacing: .1em; }
+.lightbox__btn {
+  position: absolute; display: grid; place-items: center;
+  width: 48px; height: 48px; padding: 0; cursor: pointer;
+  font: 400 1.6rem/1 var(--font-mono); color: #fff;
+  background: rgba(21, 16, 42, .85); border: 1px solid var(--line-strong);
+  clip-path: polygon(8px 0, 100% 0, 100% calc(100% - 8px), calc(100% - 8px) 100%, 0 100%, 0 8px);
+  transition: background var(--t), color var(--t);
+}
+.lightbox__btn:hover { background: var(--neon-2); }
+.lightbox__btn--prev { left: 10px; top: 50%; transform: translateY(-50%); }
+.lightbox__btn--next { right: 10px; top: 50%; transform: translateY(-50%); }
+.lightbox__btn--close { right: 10px; top: 10px; font-size: 1.1rem; }
+@media (max-width: 640px) {
+  .lightbox { padding: 60px 8px 76px; }
+  .lightbox__img { max-height: calc(100dvh - 200px); }
+  .lightbox__btn--prev, .lightbox__btn--next { top: auto; bottom: 14px; transform: none; }
+  .lightbox__btn--prev { left: calc(50% - 58px); }
+  .lightbox__btn--next { right: calc(50% - 58px); }
+  .lightbox__cap { flex-direction: column; gap: 4px; padding-inline: 8px; font-size: .85rem; }
+}
+.lightbox-open { overflow: hidden; }
+
 /* фон секции контактов */
 .section--contacts { position: relative; isolation: isolate; overflow: hidden; }
 .section__bgimg {
