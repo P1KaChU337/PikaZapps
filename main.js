@@ -265,6 +265,31 @@ if (typeof window === 'undefined') {
     });
   });
 
+  /* ---------- Плитка-слайд-шоу (аватар): кадры сменяются сами ---------- */
+  $$('.tile--slides').forEach((tile) => {
+    const slides = $$('.tile__slide', tile);
+    const dots = $$('.tile__dots i', tile);
+    const counter = $('.tile__count', tile);
+    if (slides.length < 2) return;
+    let i = 0, visible = false, hover = false;
+    const set = (n) => {
+      slides[i].classList.toggle('is-active', false);
+      if (dots[i]) dots[i].classList.toggle('is-active', false);
+      i = n % slides.length;
+      slides[i].classList.toggle('is-active', true);
+      if (dots[i]) dots[i].classList.toggle('is-active', true);
+      if (counter) counter.textContent = `${String(i + 1).padStart(2, '0')}/${String(slides.length).padStart(2, '0')}`;
+    };
+    set(0);
+    // листаем только когда плитка на экране, вкладка активна, курсор не над ней и нет reduced-motion
+    new IntersectionObserver((e) => { visible = e[0].isIntersecting; }, { threshold: 0.25 }).observe(tile);
+    tile.addEventListener('mouseenter', () => { hover = true; });
+    tile.addEventListener('mouseleave', () => { hover = false; });
+    setInterval(() => {
+      if (visible && !hover && !document.hidden && !reducedMotion()) set(i + 1);
+    }, 4200);
+  });
+
   /* ---------- Галерея «Из жизни»: просмотр фото (lightbox) ---------- */
   (() => {
     const box = $('#lightbox');
@@ -276,7 +301,18 @@ if (typeof window === 'undefined') {
     const btnPrev = $('.lightbox__btn--prev', box);
     const btnNext = $('.lightbox__btn--next', box);
     const btnClose = $('.lightbox__btn--close', box);
-    const items = links.map((a) => ({ src: a.dataset.full || a.href, caption: a.dataset.caption || '', alt: $('img', a).alt }));
+    // список фото: обычная плитка = одно фото, плитка-слайд-шоу = все её кадры подряд
+    const items = [];
+    const startOf = new Map(); // ссылка → индекс её первого фото в items
+    links.forEach((a) => {
+      startOf.set(a, items.length);
+      const slides = a.hasAttribute('data-slides') ? $$('.tile__slide', a) : [];
+      if (slides.length) {
+        slides.forEach((im) => items.push({ src: im.dataset.full, caption: im.dataset.caption || '', alt: im.alt }));
+      } else {
+        items.push({ src: a.dataset.full || a.href, caption: a.dataset.caption || '', alt: $('img', a).alt });
+      }
+    });
     const pad = (n) => String(n).padStart(2, '0');
     let index = 0, opener = null;
 
@@ -287,6 +323,7 @@ if (typeof window === 'undefined') {
       img.classList.add('is-loading');
       const next = new Image();
       next.onload = next.onerror = () => {
+        if (items[index] !== it) return; // уже перелистнули дальше
         img.src = it.src;
         img.alt = it.alt;
         img.classList.remove('is-loading');
@@ -311,10 +348,11 @@ if (typeof window === 'undefined') {
       if (opener) opener.focus();
     };
 
-    links.forEach((a, i) => a.addEventListener('click', (e) => {
+    links.forEach((a) => a.addEventListener('click', (e) => {
       if (e.ctrlKey || e.metaKey || e.shiftKey || e.button !== 0) return; // открыть в новой вкладке — как обычно
       e.preventDefault();
-      open(i, a);
+      const active = $$('.tile__slide', a).findIndex((im) => im.classList.contains('is-active'));
+      open(startOf.get(a) + Math.max(0, active), a);
     }));
     btnPrev.addEventListener('click', () => show(index - 1));
     btnNext.addEventListener('click', () => show(index + 1));

@@ -723,6 +723,19 @@ b { font-weight: 600; color: var(--text); }
 }
 .tile:hover .tile__zoom, .tile__link:focus-visible .tile__zoom { opacity: 1; transform: none; }
 @media (hover: none) { .tile__zoom { opacity: .85; transform: none; } }
+/* плитка-слайд-шоу (аватар): кадры лежат друг на друге и плавно сменяются */
+.tile--slides .tile__slide {
+  position: absolute; inset: 0;
+  opacity: 0; transform: scale(1.06);
+  transition: opacity 1.1s ease, transform 6s ease-out, filter .5s;
+}
+.tile--slides .tile__slide.is-active { opacity: 1; transform: scale(1); }
+.bento--life .tile--slides:hover .tile__slide.is-active { transform: scale(1.04); }
+.tile__count { margin-left: 8px; color: var(--magenta); }
+.tile__dots { position: absolute; right: 12px; bottom: 12px; z-index: 1; display: flex; gap: 5px; }
+.tile__dots i { width: 14px; height: 3px; background: rgba(255, 255, 255, .35); transition: background var(--t), width var(--t) var(--ease); }
+.tile__dots i.is-active { width: 26px; background: var(--magenta); box-shadow: 0 0 8px var(--magenta); }
+
 .tile--note { display: flex; align-items: flex-end; padding: 16px; background: linear-gradient(135deg, rgba(124, 58, 237, .28), rgba(162, 28, 175, .18)); }
 .tile--note p { font-size: .8rem; line-height: 1.6; color: var(--text-dim); }
 .tile--note b { font: 900 1.6rem/1 var(--font-display); color: #fff; text-shadow: var(--text-glow); }
@@ -971,6 +984,7 @@ b { font-weight: 600; color: var(--text); }
   .domain__caret { animation: none; }
   .band__img { transform: none !important; }
   .tile:hover img { transform: none; }
+  .tile--slides .tile__slide { transform: none !important; }
   .js .reveal { opacity: 1; transform: none; }
   .btn:hover, .proj:hover .proj__cover img { transform: none !important; }
 }
